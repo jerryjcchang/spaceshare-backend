@@ -30,7 +30,7 @@ class Api::V1::UsersController < ApplicationController
   def profile
     token = request.headers['Authentication'].split(' ')[1]
     payload = decode(token)
-    render json: User.find(payload["user_id"])
+    render json: User.find(payload["user_id"]), status: :accepted
   end
 
   private
