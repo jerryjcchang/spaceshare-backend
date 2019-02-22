@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
 
-  before_action :find_user, only: [:create, :show, :update, :destroy]
+  before_action :find_user, only: [:create, :update, :destroy]
 
   def index
     render json: User.all
@@ -14,9 +14,9 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  def show
-    render json: @user
-  end
+  # def show
+  #   render json: @user
+  # end
 
   def update
     @user.update(user_params)
@@ -25,6 +25,12 @@ class Api::V1::UsersController < ApplicationController
 
   def destroy
     render json: @user.destroy
+  end
+
+  def profile
+    token = request.headers['Authentication'].split(' ')[1]
+    payload = decode(token)
+    render json: User.find(payload["user_id"])
   end
 
   private
