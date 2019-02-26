@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
 
-  before_action :find_user, only: [:create, :update, :destroy]
+  before_action :find_user, only: [:create, :update, :destroy,]
 
   def index
     render json: User.all
@@ -30,7 +30,11 @@ class Api::V1::UsersController < ApplicationController
   def profile
     token = request.headers['Authentication'].split(' ')[1]
     payload = decode(token)
-    render json: User.find(payload["user_id"]), status: :accepted
+    @user = User.find(payload["user_id"])
+    render json: {user: @user,
+                  bookings: @user.bookings,
+                  spaces: @user.spaces
+                 }, status: :accepted
   end
 
   private

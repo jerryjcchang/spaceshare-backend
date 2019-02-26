@@ -5,9 +5,13 @@ class Api::V1::AuthController < ApplicationController
       render json: {
         message: "correct email and password",
         error: false,
-        user: @user,
-        token: encode({user_id: @user.id})
-        }, status: :accepted
+        user_info: {user: @user,
+                    bookings: @user.bookings,
+                    spaces: @user.spaces 
+                   },
+        token: encode({user_id: @user.id}),
+        status: :accepted
+      }
     else
       render json: {
         message: "cannot find email and password combination",

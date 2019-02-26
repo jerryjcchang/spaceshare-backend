@@ -8,7 +8,7 @@ class CreateSpaces < ActiveRecord::Migration[5.2]
       t.integer :zip
       t.float :lat
       t.float :long
-      t.integer :hourly_rate
+      t.integer :daily_rate
       t.text :description
       t.integer :host_id
 

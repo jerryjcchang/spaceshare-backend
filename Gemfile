@@ -22,6 +22,8 @@ gem 'active_model_serializers'
 
 gem 'email_address'
 
+gem 'geocoder'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
