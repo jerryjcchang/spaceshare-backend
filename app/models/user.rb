@@ -9,4 +9,11 @@ class User < ApplicationRecord
     validates_format_of :last_name, with: /\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/
     
     validates_with EmailAddress::ActiveRecordValidator, field: :email
+
+    def booked_spaces
+        bookings = []
+        self.bookings.map{|booking| bookings << {booking_id: booking.id, space: booking.space, dates: booking.dates}}
+        bookings
+    end
+
 end

@@ -6,8 +6,8 @@ class Api::V1::AuthController < ApplicationController
         message: "correct email and password",
         error: false,
         user_info: {user: @user,
-                    bookings: @user.bookings,
-                    spaces: @user.spaces 
+                    bookings: @user.booked_spaces,
+                    spaces: @user.hosted_spaces 
                    },
         token: encode({user_id: @user.id}),
         status: :accepted

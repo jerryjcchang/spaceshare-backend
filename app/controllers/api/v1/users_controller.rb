@@ -32,8 +32,8 @@ class Api::V1::UsersController < ApplicationController
     payload = decode(token)
     @user = User.find(payload["user_id"])
     render json: {user: @user,
-                  bookings: @user.bookings,
-                  spaces: @user.spaces
+                  bookings: @user.booked_spaces,
+                  spaces: @user.hosted_spaces
                  }, status: :accepted
   end
 

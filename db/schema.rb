@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 2019_02_25_155808) do
   create_table "bookings", force: :cascade do |t|
     t.integer "guest_id"
     t.integer "space_id"
-    t.datetime "start"
-    t.datetime "end"
+    t.date "start"
+    t.date "end"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
