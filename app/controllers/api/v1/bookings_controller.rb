@@ -1,5 +1,7 @@
 class Api::V1::BookingsController < ApplicationController
 
+  before_action :find_booking, only: [:update, :destroy]
+
   def index
     render json: Booking.all
   end
@@ -20,9 +22,11 @@ class Api::V1::BookingsController < ApplicationController
   end
 
   def update
+    
   end
 
   def destroy
+    render json: @booking.destroy
   end
 
   private
@@ -34,6 +38,10 @@ class Api::V1::BookingsController < ApplicationController
       :start,
       :end,
     )
+  end
+
+  def find_booking
+    @booking = Booking.find(params[:id])
   end
 
 end

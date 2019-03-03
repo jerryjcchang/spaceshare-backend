@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
     def booked_spaces
         bookings = []
-        self.bookings.map{|booking| bookings << {booking_id: booking.id, space: booking.space, dates: booking.dates}}
+        self.bookings.map{|booking| bookings << {booking_id: booking.id, start: booking.start, end: booking.end, space: booking.space, dates: booking.dates}}
         bookings
     end
 
