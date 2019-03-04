@@ -8,7 +8,7 @@ class Booking < ApplicationRecord
     end
     
     def dates
-        (self.start...self.end).map{|date| date}
+        (self.start..self.end).map{|date| date}
     end
 
 end

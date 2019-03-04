@@ -22,7 +22,9 @@ class Api::V1::BookingsController < ApplicationController
   end
 
   def update
-    
+    # byebug
+    @booking.update(start: params[:start], end: params[:end])
+    render json: @booking
   end
 
   def destroy
