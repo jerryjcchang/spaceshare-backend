@@ -2,8 +2,11 @@ class Api::V1::SpacesController < ApplicationController
 
   before_action :find_space, only: [:create, :show, :update, :destroy]
 
-  def index
-    render json: Space.all
+  def get_spaces
+    # byebug
+    start = params["starting_index"].to_i
+    last = start+19
+    render json: Space.all[start..last]
   end
 
   def create

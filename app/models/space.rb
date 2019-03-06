@@ -6,4 +6,8 @@ class Space < ApplicationRecord
     has_many :spaces_features
     has_many :features, through: :spaces_features
     
+    def features_list
+        self.features.map{|feature| feature.name}
+    end
+
 end

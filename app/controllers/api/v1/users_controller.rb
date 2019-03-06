@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
 
-  before_action :find_user, only: [:create, :update, :destroy,]
+  before_action :find_user, only: [:update, :destroy,]
 
   def index
     render json: User.all
@@ -47,6 +47,8 @@ class Api::V1::UsersController < ApplicationController
       :company,
       :city,
       :state,
+      :password,
+      :password_confirmation,
       :phone,
     )
   end

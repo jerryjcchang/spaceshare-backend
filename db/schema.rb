@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_25_155808) do
+ActiveRecord::Schema.define(version: 2019_03_05_172351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2019_02_25_155808) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "img_url"
   end
 
   create_table "listings", force: :cascade do |t|
@@ -36,6 +37,7 @@ ActiveRecord::Schema.define(version: 2019_02_25_155808) do
     t.datetime "listing_end"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
   end
 
   create_table "spaces", force: :cascade do |t|
@@ -55,6 +57,8 @@ ActiveRecord::Schema.define(version: 2019_02_25_155808) do
     t.string "img_url2"
     t.string "img_url3"
     t.string "img_url4"
+    t.string "slug"
+    t.integer "api_id"
   end
 
   create_table "spaces_features", force: :cascade do |t|
