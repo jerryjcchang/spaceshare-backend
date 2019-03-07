@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_05_172351) do
+ActiveRecord::Schema.define(version: 2019_03_07_215343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 2019_03_05_172351) do
     t.date "end"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "discount", default: 0
+    t.integer "rate"
   end
 
   create_table "features", force: :cascade do |t|
@@ -59,6 +61,7 @@ ActiveRecord::Schema.define(version: 2019_03_05_172351) do
     t.string "img_url4"
     t.string "slug"
     t.integer "api_id"
+    t.boolean "promo", default: false
   end
 
   create_table "spaces_features", force: :cascade do |t|
@@ -79,6 +82,8 @@ ActiveRecord::Schema.define(version: 2019_03_05_172351) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "points", default: 1000
+    t.boolean "reward", default: false
   end
 
 end

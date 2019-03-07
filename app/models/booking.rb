@@ -11,4 +11,18 @@ class Booking < ApplicationRecord
         (self.start..self.end).map{|date| date}
     end
 
+    def change_points(days)
+        guest = self.guest
+        points = self.guest.points
+        points_to_add = self.space.daily_rate * 10 * days
+        self.guest.update(points: points + points_to_add)
+    end
+
+    def remove_points
+        guest = self.guest
+        points = self.guest.points
+        points_to_subtract = self.space.daily_rate * 10
+        self.guest.update(points: points - points_to_subtract)
+    end
+
 end

@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
 
-  before_action :find_user, only: [:update, :destroy,]
+  before_action :find_user, only: [:redeem_reward, :profile, :destroy,]
 
   def index
     render json: User.all
@@ -18,9 +18,8 @@ class Api::V1::UsersController < ApplicationController
   #   render json: @user
   # end
 
-  def update
-    @user.update(user_params)
-    render json: @user
+  def redeem_reward
+    @user.update(points: @user.points - 10000, reward: true)
   end
 
   def destroy
@@ -28,9 +27,6 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def profile
-    token = request.headers['Authentication'].split(' ')[1]
-    payload = decode(token)
-    @user = User.find(payload["user_id"])
     render json: {user: @user,
                   bookings: @user.booked_spaces,
                   spaces: @user.hosted_spaces
@@ -50,11 +46,14 @@ class Api::V1::UsersController < ApplicationController
       :password,
       :password_confirmation,
       :phone,
+      :reward,
     )
   end
 
   def find_user
-    @user = User.find_by(username: params[:id])
+    token = request.headers['Authentication'].split(' ')[1]
+    payload = decode(token)
+    @user = User.find(payload["user_id"])
   end
 
 end

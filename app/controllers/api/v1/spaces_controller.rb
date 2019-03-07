@@ -3,10 +3,9 @@ class Api::V1::SpacesController < ApplicationController
   before_action :find_space, only: [:create, :show, :update, :destroy]
 
   def get_spaces
-    # byebug
     start = params["starting_index"].to_i
     last = start+19
-    render json: Space.all[start..last]
+    render json: Space.all.sort_by{|space| space.id}
   end
 
   def create

@@ -15,4 +15,12 @@ class User < ApplicationRecord
         bookings
     end
 
+    def reset_reward
+        self.update(reward: false)
+    end
+
+    def refund_reward
+        self.update(reward: true)
+    end
+
 end

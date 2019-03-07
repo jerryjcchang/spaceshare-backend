@@ -9,25 +9,31 @@ class Api::V1::BookingsController < ApplicationController
   def create
     token = request.headers['Authentication'].split(' ')[1]
     user_id = decode(token)["user_id"]
-    @booking = Booking.new(space_id: params[:space_id],
+    space_id = params[:space_id]
+    @booking = Booking.new(
+                space_id: params[:space_id],
                 guest_id: user_id,
                 start: params["start"].to_date,
                 end: params["end"].to_date,
                 )
     if @booking.valid?
       @booking.save
+      @booking.change_points(@booking.dates.length)
+      @booking.guest.reset_reward
       render json: @booking, status: :accepted
     end
       
   end
 
   def update
-    # byebug
     @booking.update(start: params[:start], end: params[:end])
-    render json: @booking
+    days = @booking.dates.length - params[:old_days]
+    @booking.change_points(days)
+    render json: {booking: @booking, booking_dates: @booking.dates, user_points: @booking.guest.points}
   end
 
   def destroy
+    @booking.remove_points
     render json: @booking.destroy
   end
 

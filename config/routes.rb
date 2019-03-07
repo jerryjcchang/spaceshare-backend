@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       post '/login', to: 'auth#create'
       get '/profile', to: 'users#profile'
       get '/get_spaces/:starting_index', to: 'spaces#get_spaces'
-
+      patch '/redeem', to: 'users#redeem_reward'
     end
   end
 end
