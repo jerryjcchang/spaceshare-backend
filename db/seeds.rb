@@ -3080,30 +3080,41 @@ def create_space(space, space_details, address_data, features)
     img_url: space_details["cover-photo"]
   )
   new_space.features = features[rand(17)]
+  byebug
   new_space.save
   puts "SEEDED: id: #{new_space.api_id}, space: #{new_space.name}"
 end
 
 spaces[0..-1].each do |space|
-    begin
-    url_to_fetch = "https://coworkingmap.org/wp-json/spaces/united-states/#{space[:city].parameterize}/#{space[:slug]}"
-    response = RestClient.get(url_to_fetch, {"Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvY293b3JraW5nbWFwLm9yZyIsImlhdCI6MTU2MTIzNDY5NiwibmJmIjoxNTYxMjM0Njk2LCJleHAiOjE1NjE4Mzk0OTYsImRhdGEiOnsidXNlciI6eyJpZCI6IjI4MDIifX19.H7WhOAv9E84SjiV3kaThU72bH8ywn1aHNPjws0t2wlc"})
-  rescue
-    puts "Bad Fetch - #{space[:ID]}, space: #{space[:name]}"
-    next
-  end
-    space_details = JSON.parse(response.body)
+    if !Space.all.find_by(name: space[:name])
+      begin
+        url_to_fetch = "https://coworkingmap.org/wp-json/spaces/united-states/#{space[:city].parameterize}/#{space[:slug]}"
+        response = RestClient.get(url_to_fetch, {"Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvY293b3JraW5nbWFwLm9yZyIsImlhdCI6MTU2MTIzNDY5NiwibmJmIjoxNTYxMjM0Njk2LCJleHAiOjE1NjE4Mzk0OTYsImRhdGEiOnsidXNlciI6eyJpZCI6IjI4MDIifX19.H7WhOAv9E84SjiV3kaThU72bH8ywn1aHNPjws0t2wlc"})
+      rescue
+        puts "Bad Fetch - #{space[:ID]}, space: #{space[:name]}"
+      next
+      end
+      space_details = JSON.parse(response.body)
 
-    lat = space[:map][:lat].to_f
-    long = space[:map][:lng].to_f
+      lat = space[:map][:lat].to_f
+      long = space[:map][:lng].to_f
 
-    address_data = Geocoder.search([lat,long])
+      address_data = Geocoder.search([lat,long])
 
-    if address_data[0].data.key?("error")
-      puts "Bad Address - #{space[:ID]}, space: #{space[:name]}"
-    else
-      create_space(space, space_details, address_data, features)
+      if address_data[0].data.key?("error")
+        puts "Bad Address - #{space[:ID]}, space: #{space[:name]}"
+      else
+        create_space(space, space_details, address_data, features)
+      end
+    else puts "All spaces already seeded"
     end
+end
+
+
+if Feature.last.spaces.empty?
+nums = (0..250).to_a.shuffle.take(15).sort
+Space.first.features << clothing
+nums.each{|num| Space.all[num].features << clothing}
 end
 # t.string "name"
 # t.string "street_address"
