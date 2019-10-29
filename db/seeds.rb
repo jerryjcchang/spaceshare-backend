@@ -14,6 +14,7 @@ jc = User.create(email: 'jerryjcchang@gmail.com',
                             state: 'VA',
                             phone: "6264008170",
                             password: 'chaos198',
+                            img_url: 'https://i.imgur.com/YeXKWwq.jpg'
                               )
 
 athena = User.create(email: 'athena.leyun.shi@gmail.com',
@@ -24,7 +25,8 @@ athena = User.create(email: 'athena.leyun.shi@gmail.com',
                      #   password_confirmation: 'A7athena',
                        city: 'Arlington',
                        state: 'VA',
-                       phone: "4157285032"
+                       phone: "4157285032",
+                       img_url: "https://i.imgur.com/5jMEXcN.jpg?1"
                        )
 
 jonnel = User.create(email: 'jonnel.benjamin@gmail.com',
@@ -66,11 +68,13 @@ robin = User.create(email: 'robobeans@gmail.com',
                     state: 'DE',
                     phone: "5555555555"
                     )
+                    byebug
 
 admin = User.create(email: 'admin@spaceshare.com', first_name: "admin", last_name: "admin", company: "Spaceshare", password: "password")
+puts "Users created successfully."
 
 space1 = Space.find_or_create_by(name: "Flatiron School",
-                        street_address:"1440 G St NW",
+                        street_address: "1440 G St NW",
                         city: "Washington",
                         state: "DC",
                         zip: "20005",
@@ -340,6 +344,7 @@ space20 = Space.find_or_create_by(name: "Spaces NoMa",
                                  host_id: 1,
                                  img_url: "https://coworker.imgix.net/photos/united-states/washington-dc/washington/spaces-noma/main.jpg"
                                  )
+puts "Custom spaces created successfully."
 
 Space.all.each{|space| space.update(slug: space.name.parameterize, street_address: "#{space.street_address}, #{space.city}, #{space.state} #{space.zip}")}
 
@@ -372,7 +377,7 @@ clothing = Feature.find(9)
 single.update(img_url: "https://i.imgur.com/O4ShyYT.png")
 group.update(img_url: "https://i.imgur.com/RBLRKft.png")
 conference.update(img_url: "https://i.imgur.com/zdvODik.png")
-wifi.update(img_url: "https://www.rivierarivercruises.com/content/images/icons/WIFI_Circle_AQUA.png")
+wifi.update(img_url: "http://icons.iconarchive.com/icons/custom-icon-design/flatastic-11/128/Wifi-2-icon.png")
 monitor.update(img_url: "http://mbabangalore.co.in/images/reicon6.png")
 coffee.update(img_url: "https://www.mrtakeoutbags.com/mm5/graphics/flat-design-coffee-cup.png")
 
@@ -433,6 +438,8 @@ space17.features = features2
 space18.features = features7
 space19.features = features5
 space20.features = features5
+
+puts "Features created successfully."
 
 spaces = Space.all.sort_by{|space| space.id}
 
@@ -3087,7 +3094,8 @@ spaces[0..-1].each do |space|
     if !Space.all.find_by(name: space[:name])
       begin
         url_to_fetch = "https://coworkingmap.org/wp-json/spaces/united-states/#{space[:city].parameterize}/#{space[:slug]}"
-        response = RestClient.get(url_to_fetch, {"Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvY293b3JraW5nbWFwLm9yZyIsImlhdCI6MTU2MTIzNDY5NiwibmJmIjoxNTYxMjM0Njk2LCJleHAiOjE1NjE4Mzk0OTYsImRhdGEiOnsidXNlciI6eyJpZCI6IjI4MDIifX19.H7WhOAv9E84SjiV3kaThU72bH8ywn1aHNPjws0t2wlc"})
+        # byebug
+        response = RestClient.get(url_to_fetch, {"Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvY293b3JraW5nbWFwLm9yZyIsImlhdCI6MTU3MTk1NTEyMiwibmJmIjoxNTcxOTU1MTIyLCJleHAiOjE1NzI1NTk5MjIsImRhdGEiOnsidXNlciI6eyJpZCI6IjI4MDIifX19.Fpx9IM3y4rbdLqRsDDQZpyf7zr88r-cvKZorrD09Mn8"})
       rescue
         puts "Bad Fetch - #{space[:ID]}, space: #{space[:name]}"
       next
@@ -3110,7 +3118,7 @@ end
 
 
 if Feature.last.spaces.empty?
-nums = (0..250).to_a.shuffle.take(15).sort
+nums = (0..Space.all.length).to_a.shuffle.take(15).sort
 Space.first.features << clothing
 nums.each{|num| Space.all[num].features << clothing}
 end
