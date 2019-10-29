@@ -68,7 +68,6 @@ robin = User.create(email: 'robobeans@gmail.com',
                     state: 'DE',
                     phone: "5555555555"
                     )
-                    byebug
 
 admin = User.create(email: 'admin@spaceshare.com', first_name: "admin", last_name: "admin", company: "Spaceshare", password: "password")
 puts "Users created successfully."
@@ -3094,7 +3093,6 @@ spaces[0..-1].each do |space|
     if !Space.all.find_by(name: space[:name])
       begin
         url_to_fetch = "https://coworkingmap.org/wp-json/spaces/united-states/#{space[:city].parameterize}/#{space[:slug]}"
-        # byebug
         response = RestClient.get(url_to_fetch, {"Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvY293b3JraW5nbWFwLm9yZyIsImlhdCI6MTU3MTk1NTEyMiwibmJmIjoxNTcxOTU1MTIyLCJleHAiOjE1NzI1NTk5MjIsImRhdGEiOnsidXNlciI6eyJpZCI6IjI4MDIifX19.Fpx9IM3y4rbdLqRsDDQZpyf7zr88r-cvKZorrD09Mn8"})
       rescue
         puts "Bad Fetch - #{space[:ID]}, space: #{space[:name]}"
