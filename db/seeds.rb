@@ -445,63 +445,63 @@ puts "Custom spaces created successfully."
 
 #fetch token
 # hash = Rails.application.credentials.coworkingmap
-username = ENV["USERNAME"]
-password = ENV["PASSWORD"]
-url = "https://coworkingmap.org/wp-json/jwt-auth/v1/token/?username=#{username}&password=#{password}"
-token = JSON.parse(RestClient.post(url, {}, headers: {}))["token"]
-puts "token fetched successfully"
-spaces_url = "https://coworkingmap.org/wp-json/spaces/united-states"
-spaces = JSON.parse(RestClient.get(spaces_url, Authorization: "Bearer #{token}"))
-
-def create_space(space, space_details, address_data, features)
-  rate = [25,30,35,40,45,50,55,60]
-  new_space = Space.new(
-    api_id: space["ID"],
-    name: space["name"],
-    street_address: space["map"]["address"],
-    city: space["city"], lat: space["map"]["lat"].to_f,
-    long: space["map"]["lng"].to_f,
-    daily_rate: rate[rand(0..7)],
-    slug: space["slug"],
-    host_id: User.find_by(first_name:"admin").id,
-    state: address_data[0].state,
-    zip: address_data[0].postal_code.to_i,
-    description: space_details["description"].gsub(/<br\s*\/?>/, ''),
-    img_url: space_details["cover-photo"]
-  )
-  new_space.features = features[rand(17)]
-  new_space.save
-  puts "SEEDED: id: #{new_space.api_id}, space: #{new_space.name}"
-end
-
-spaces[0..-1].each do |space|
-    if !Space.all.find_by(name: space["name"])
-      begin
-        url_to_fetch = "https://coworkingmap.org/wp-json/spaces/united-states/#{space["city"].parameterize}/#{space["slug"]}"
-        response = RestClient.get(url_to_fetch, {"Authorization": "Bearer #{token}"})
-      rescue
-        puts "Bad Fetch - #{space["ID"]}, space: #{space["name"]}"
-      next
-      end
-      space_details = JSON.parse(response.body)
-
-      lat = space["map"]["lat"].to_f
-      long = space["map"]["lng"].to_f
-
-      address_data = Geocoder.search([lat,long])
-
-      if address_data[0].data.key?("error")
-        puts "Bad Address - #{space["ID"]}, space: #{space["name"]}"
-      else
-        create_space(space, space_details, address_data, features)
-      end
-    else puts "Space already seeded"
-    end
-end
-
-
-if Feature.last.spaces.empty?
-nums = (0..Space.all.length).to_a.shuffle.take(15).sort
-Space.first.features << clothing
-nums.each{|num| Space.all[num].features << clothing}
-end
+# username = ENV["USERNAME"]
+# password = ENV["PASSWORD"]
+# url = "https://coworkingmap.org/wp-json/jwt-auth/v1/token/?username=#{username}&password=#{password}"
+# token = JSON.parse(RestClient.post(url, {}, headers: {}))["token"]
+# puts "token fetched successfully"
+# spaces_url = "https://coworkingmap.org/wp-json/spaces/united-states"
+# spaces = JSON.parse(RestClient.get(spaces_url, Authorization: "Bearer #{token}"))
+#
+# def create_space(space, space_details, address_data, features)
+#   rate = [25,30,35,40,45,50,55,60]
+#   new_space = Space.new(
+#     api_id: space["ID"],
+#     name: space["name"],
+#     street_address: space["map"]["address"],
+#     city: space["city"], lat: space["map"]["lat"].to_f,
+#     long: space["map"]["lng"].to_f,
+#     daily_rate: rate[rand(0..7)],
+#     slug: space["slug"],
+#     host_id: User.find_by(first_name:"admin").id,
+#     state: address_data[0].state,
+#     zip: address_data[0].postal_code.to_i,
+#     description: space_details["description"].gsub(/<br\s*\/?>/, ''),
+#     img_url: space_details["cover-photo"]
+#   )
+#   new_space.features = features[rand(17)]
+#   new_space.save
+#   puts "SEEDED: id: #{new_space.api_id}, space: #{new_space.name}"
+# end
+#
+# spaces[0..-1].each do |space|
+#     if !Space.all.find_by(name: space["name"])
+#       begin
+#         url_to_fetch = "https://coworkingmap.org/wp-json/spaces/united-states/#{space["city"].parameterize}/#{space["slug"]}"
+#         response = RestClient.get(url_to_fetch, {"Authorization": "Bearer #{token}"})
+#       rescue
+#         puts "Bad Fetch - #{space["ID"]}, space: #{space["name"]}"
+#       next
+#       end
+#       space_details = JSON.parse(response.body)
+#
+#       lat = space["map"]["lat"].to_f
+#       long = space["map"]["lng"].to_f
+#
+#       address_data = Geocoder.search([lat,long])
+#
+#       if address_data[0].data.key?("error")
+#         puts "Bad Address - #{space["ID"]}, space: #{space["name"]}"
+#       else
+#         create_space(space, space_details, address_data, features)
+#       end
+#     else puts "Space already seeded"
+#     end
+# end
+#
+# 
+# if Feature.last.spaces.empty?
+# nums = (0..Space.all.length).to_a.shuffle.take(15).sort
+# Space.first.features << clothing
+# nums.each{|num| Space.all[num].features << clothing}
+# end
