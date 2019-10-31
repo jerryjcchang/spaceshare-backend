@@ -144,6 +144,7 @@ def all_features
 end
 
 ##CREATE CUSTOM SPACES
+Space.destroy_all
 space1 = Space.find_or_create_by(name: "Flatiron School",
                         street_address: "1440 G St NW",
                         city: "Washington",
