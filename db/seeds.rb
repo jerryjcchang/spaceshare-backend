@@ -442,8 +442,7 @@ Space.all.each{|space| space.update(slug: space.name.parameterize, street_addres
 
 puts "Custom spaces created successfully."
 
-FETCH SPACES
-
+#FETCH SPACES
 fetch token
 hash = Rails.application.credentials.coworkingmap
 username = ENV["USERNAME"]
