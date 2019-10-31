@@ -444,9 +444,9 @@ puts "Custom spaces created successfully."
 #FETCH SPACES
 
 #fetch token
-hash = Rails.application.credentials.coworkingmap
-username = hash[:username]
-password = hash[:password]
+# hash = Rails.application.credentials.coworkingmap
+username = ENV["USERNAME"]
+password = ENV["PASSWORD"]
 url = "https://coworkingmap.org/wp-json/jwt-auth/v1/token/?username=#{username}&password=#{password}"
 token = JSON.parse(RestClient.post(url, {}, headers: {}))["token"]
 puts "token fetched successfully"
