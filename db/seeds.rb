@@ -2,6 +2,18 @@ require 'bcrypt'
 require 'geocoder'
 require 'rest-client'
 
+# fetch token
+hash = Rails.application.credentials.coworkingmap
+username = ENV["USERNAME"]
+raise "username not found" if username.nil?
+password = ENV["PASSWORD"]
+raise "password not found" if password.nil?
+url = "https://coworkingmap.org/wp-json/jwt-auth/v1/token/?username=#{username}&password=#{password}"
+token = JSON.parse(RestClient.post(url, {}, headers: {}))["token"]
+puts "token fetched successfully"
+spaces_url = "https://coworkingmap.org/wp-json/spaces/united-states"
+spaces = JSON.parse(RestClient.get(spaces_url, Authorization: "Bearer #{token}"))
+
 #CREATE USERS
 User.destroy_all
 jc = User.create(email: 'jerryjcchang@gmail.com',
@@ -443,15 +455,6 @@ Space.all.each{|space| space.update(slug: space.name.parameterize, street_addres
 puts "Custom spaces created successfully."
 
 #FETCH SPACES
-# fetch token
-hash = Rails.application.credentials.coworkingmap
-username = ENV["USERNAME"]
-password = ENV["PASSWORD"]
-url = "https://coworkingmap.org/wp-json/jwt-auth/v1/token/?username=#{username}&password=#{password}"
-token = JSON.parse(RestClient.post(url, {}, headers: {}))["token"]
-puts "token fetched successfully"
-spaces_url = "https://coworkingmap.org/wp-json/spaces/united-states"
-spaces = JSON.parse(RestClient.get(spaces_url, Authorization: "Bearer #{token}"))
 
 def create_space(space, space_details, address_data, features)
   rate = [25,30,35,40,45,50,55,60]
