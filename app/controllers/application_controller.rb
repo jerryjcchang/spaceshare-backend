@@ -16,5 +16,5 @@ class ApplicationController < ActionController::API
         # is there token
         # if there is token, current user = User.find
     end
-    
+
 end
