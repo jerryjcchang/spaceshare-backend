@@ -1,24 +1,40 @@
-# README
+# spaceshare-backend #
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+This is the Ruby on Rails Backend for Spaceshare - a mock-up concept for a membership-based service to find and book co-working spaces in the United States using data from the Coworking Map API.
 
-* Ruby version
+Global Dependencies:
 
-* System dependencies
+* Ruby 2.6.2 | Rails 5.2.4
 
-* Configuration
+### `Technology`
 
-* Database creation
+Ruby | Ruby on Rails | PostgreSQL
 
-* Database initialization
+BCrypt | JWT | Geocoder | Email_Address
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+### `Getting Started`
 
-* Deployment instructions
+* git clone <repo>
+* bundle install
+  
+### `Create CoworkingMap API Account`
+* Register for a CoWorkingMap API Account [here](https://coworkingmap.org/signup/).
+* Store your username and password as variables in the seed file.
 
-* ...
+*Note: Don't push your seedfile with your login to github, use Rails 5.2 Credentials to secure your login info. 
+
+### `Create and Setup The Database`
+```ruby
+rails db:create
+rails db:migrate
+rails db:seed
+```
+  
+### `rails server`
+
+Run ```rails server``` to run the server
+Open [http://localhost:3000/api/v1/spaces](http://localhost:3000/api/v1/spaces) to view JSON data in the browser.
+
+
