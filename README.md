@@ -19,7 +19,7 @@ BCrypt | JWT | Geocoder | Email_Address
 * git clone <repo>
 * bundle install
   
-### `Create CoworkingMap API Account`
+### `Create CoWorkingMap API Account`
 * Register for a CoWorkingMap API Account [here](https://coworkingmap.org/signup/).
 * Store your username and password as variables in the seed file.
 
