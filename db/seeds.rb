@@ -5,8 +5,10 @@ require 'rest-client'
 # fetch token
 hash = Rails.application.credentials.coworkingmap
 username = ENV["USERNAME"]
+# username = your-username-here
 raise "USERNAME NOT FOUND" if username.nil?
 password = ENV["PASSWORD"]
+# password = your-password-here
 raise "PASSWORD NOT FOUND" if password.nil?
 url = "https://coworkingmap.org/wp-json/jwt-auth/v1/token/?username=#{username}&password=#{password}"
 token = JSON.parse(RestClient.post(url, {}, headers: {}))["token"]
