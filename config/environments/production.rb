@@ -47,6 +47,9 @@ Rails.application.configure do
   # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]
 
+  # Allowed cors origins
+  config.allowed_cors_origins = ["https://spaceshare-coworking.herokuapp.com"]
+
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 

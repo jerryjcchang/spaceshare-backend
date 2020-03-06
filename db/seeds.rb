@@ -5,6 +5,7 @@ require 'rest-client'
 # fetch token
 hash = Rails.application.credentials.coworkingmap
 username = ENV["USERNAME"]
+byebug
 # username = your-username-here
 raise "USERNAME NOT FOUND" if username.nil?
 password = ENV["PASSWORD"]
