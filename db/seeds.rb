@@ -1,6 +1,7 @@
 require 'bcrypt'
 require 'geocoder'
 require 'rest-client'
+require 'byebug'
 
 # fetch token
 hash = Rails.application.credentials.coworkingmap
@@ -11,7 +12,9 @@ password = hash[:password]
 # password = your-password-here
 raise "PASSWORD NOT FOUND" if password.nil?
 url = "https://coworkingmap.org/wp-json/jwt-auth/v1/token/?username=#{username}&password=#{password}"
+byebug
 token = JSON.parse(RestClient.post(url, {}, headers: {}))["token"]
+byebug
 puts "token fetched successfully"
 spaces_url = "https://coworkingmap.org/wp-json/spaces/united-states"
 spaces = JSON.parse(RestClient.get(spaces_url, Authorization: "Bearer #{token}"))
