@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::API
 
     def secret_key
-        'j@th3na'
+        Rails.application.credentials.secret_key
     end
 
     def encode(payload)
